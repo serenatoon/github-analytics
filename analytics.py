@@ -18,14 +18,24 @@ def get_views(repo, username, password):
     endpoint = GITHUB_ENDPOINT + "repos/" + repo + "/traffic/views"
 
     req = requests.get(endpoint, auth=(username, password))
-    print req.json()
+    print req.text
+
+
+def get_clones(repo, username, password):
+    global GITHUB_ENDPOINT
+    endpoint = GITHUB_ENDPOINT + "repos/" + repo + "/traffic/clones"
+
+    req = requests.get(endpoint, auth=(username, password))
+    print req.text
 
 
 def main(username, password):
     repos = get_repos(username)
     for key in repos:
         repo = key['full_name']
+        print repo
         get_views(repo, username, password)
+        get_clones(repo, username, password)
 
 
 if __name__ == "__main__":
