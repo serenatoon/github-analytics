@@ -10,16 +10,22 @@ def get_repos(username):
     print endpoint
     req = requests.get(endpoint)
     json_data = req.json()
-    for key in json_data:
-        print key['full_name']
+    return json_data
+
+
+def get_views(repo, username, password):
+    global GITHUB_ENDPOINT
+    endpoint = GITHUB_ENDPOINT + "repos/" + repo + "/traffic/views"
+
+    req = requests.get(endpoint, auth=(username, password))
+    print req.json()
 
 
 def main(username, password):
-    get_repos(username)
-    # endpoint = "https://api.github.com/repos/serenatoon/spacelords/traffic/views"
-
-    # req = requests.get(endpoint, auth=(username, password))
-    # print req.json()
+    repos = get_repos(username)
+    for key in repos:
+        repo = key['full_name']
+        get_views(repo, username, password)
 
 
 if __name__ == "__main__":
