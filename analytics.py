@@ -1,8 +1,8 @@
 import requests
 import sys
-import json
 
 GITHUB_ENDPOINT = "https://api.github.com/"
+
 
 def get_repos(username):
     global GITHUB_ENDPOINT
@@ -18,7 +18,7 @@ def get_views(repo, username, password):
     endpoint = GITHUB_ENDPOINT + "repos/" + repo + "/traffic/views"
 
     req = requests.get(endpoint, auth=(username, password))
-    print req.text
+    print "VIEWS: " + req.text
 
 
 def get_clones(repo, username, password):
@@ -26,13 +26,14 @@ def get_clones(repo, username, password):
     endpoint = GITHUB_ENDPOINT + "repos/" + repo + "/traffic/clones"
 
     req = requests.get(endpoint, auth=(username, password))
-    print req.text
+    print "CLONES: " + req.text
 
 
 def main(username, password):
     repos = get_repos(username)
     for key in repos:
         repo = key['full_name']
+        print ""
         print repo
         get_views(repo, username, password)
         get_clones(repo, username, password)
